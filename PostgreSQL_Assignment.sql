@@ -170,11 +170,20 @@ WHERE
     ) < 1800;
 
 -- Problem 8
--- SELECT sighting_id, extract(
---         hour
---         FROM sighting_time
---     ) as time_of_day
--- FROM sightings WHERE time_of_day
+SELECT
+    sighting_id,
+    CASE
+        WHEN extract(
+            hour
+            FROM sighting_time
+        ) BETWEEN 1 AND 11  THEN 'Morning'
+        WHEN extract(
+            hour
+            FROM sighting_time
+        ) BETWEEN 12 AND 17  THEN 'Afternoon'
+        ELSE 'Evening'
+    END AS time_of_day
+FROM sightings;
 
 -- Problem 9
 DELETE FROM rangers
